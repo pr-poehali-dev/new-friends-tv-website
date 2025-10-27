@@ -7,6 +7,8 @@ import Icon from '@/components/ui/icon';
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('home');
+  const [selectedShow, setSelectedShow] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState('Все');
 
   const programs = [
     { id: 1, title: 'Доброе утро', time: '06:00', type: 'Шоу', image: 'https://cdn.poehali.dev/projects/17136233-418e-4c97-b9f0-dc3add6e480b/files/f19a67b5-0c31-4252-bd07-c4eda9efb358.jpg' },
@@ -107,12 +109,78 @@ const Index = () => {
     { id: 3, title: 'Новая студия в центре Москвы', date: '20 октября 2025', excerpt: 'Телеканал открывает современную студию для съемок развлекательных программ' },
   ];
 
+  const categories = ['Все', 'Новости', 'Развлечения', 'Спорт', 'Музыка', 'Сериалы'];
+
   const shows = [
-    { title: 'Доброе утро', time: 'Будни 06:00', description: 'Утреннее информационно-развлекательное шоу', type: 'Шоу' },
-    { title: 'Новые друзья', time: 'Будни 15:00', description: 'Популярный сериал о современной жизни', type: 'Сериал' },
-    { title: 'Вечернее шоу', time: 'Будни 19:00', description: 'Гости, интервью, развлечения', type: 'Ток-шоу' },
-    { title: 'Главное кино', time: 'Ежедневно 21:00', description: 'Лучшие фильмы мирового кинематографа', type: 'Кино' },
+    { 
+      id: 1,
+      title: 'Большой футбол', 
+      time: 'Воскресенье 13:00', 
+      description: 'Главное спортивное шоу канала. Обзоры матчей, интервью со звездами футбола', 
+      type: 'Спорт',
+      category: 'Спорт',
+      episodes: [
+        { id: 1, title: 'Финал чемпионата', date: '8 ноября', videoUrl: 'https://www.youtube.com/embed/9Auq9mYxFEE' },
+        { id: 2, title: 'Лучшие голы сезона', date: '1 ноября', videoUrl: 'https://www.youtube.com/embed/9Auq9mYxFEE' },
+        { id: 3, title: 'Интервью с тренером', date: '25 октября', videoUrl: 'https://www.youtube.com/embed/9Auq9mYxFEE' },
+      ],
+      hasContest: true
+    },
+    { 
+      id: 2,
+      title: 'Супер Аватар', 
+      time: 'Пятница 20:10', 
+      description: 'Новое музыкальное шоу! Звезды поют под масками', 
+      type: 'Музыка',
+      category: 'Музыка',
+      episodes: [
+        { id: 1, title: 'Первый выпуск - Премьера', date: '1 ноября', videoUrl: 'https://www.youtube.com/embed/9Auq9mYxFEE' },
+      ],
+      hasContest: false
+    },
+    { 
+      id: 3,
+      title: 'Итоги недели', 
+      time: 'Пятница 19:00', 
+      description: 'Главные события недели с ведущими экспертами', 
+      type: 'Новости',
+      category: 'Новости',
+      episodes: [
+        { id: 1, title: 'Итоги недели - 1 выпуск', date: '1 ноября', videoUrl: 'https://www.youtube.com/embed/9Auq9mYxFEE' },
+      ],
+      hasContest: false
+    },
+    { 
+      id: 4,
+      title: 'Доброе утро', 
+      time: 'Будни 06:00', 
+      description: 'Утреннее информационно-развлекательное шоу', 
+      type: 'Развлечения',
+      category: 'Развлечения',
+      episodes: [
+        { id: 1, title: 'Доброе утро - 27 октября', date: '27 октября', videoUrl: 'https://www.youtube.com/embed/9Auq9mYxFEE' },
+        { id: 2, title: 'Доброе утро - 26 октября', date: '26 октября', videoUrl: 'https://www.youtube.com/embed/9Auq9mYxFEE' },
+      ],
+      hasContest: false
+    },
+    { 
+      id: 5,
+      title: 'Новые друзья', 
+      time: 'Будни 15:00', 
+      description: 'Популярный сериал о современной жизни', 
+      type: 'Сериал',
+      category: 'Сериалы',
+      episodes: [
+        { id: 1, title: 'Серия 15 - Неожиданная встреча', date: '27 октября', videoUrl: 'https://www.youtube.com/embed/9Auq9mYxFEE' },
+        { id: 2, title: 'Серия 14 - Тайна раскрыта', date: '26 октября', videoUrl: 'https://www.youtube.com/embed/9Auq9mYxFEE' },
+      ],
+      hasContest: false
+    },
   ];
+
+  const filteredShows = selectedCategory === 'Все' 
+    ? shows 
+    : shows.filter(show => show.category === selectedCategory);
 
   const scrollToSection = (section: string) => {
     setActiveSection(section);
@@ -348,28 +416,136 @@ const Index = () => {
 
       <section id="shows" className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h3 className="text-3xl font-bold text-center mb-12">Популярные передачи</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {shows.map((show, index) => (
-              <Card key={index} className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+          <h3 className="text-3xl font-bold text-center mb-12">Архив передач</h3>
+          
+          <div className="flex gap-3 mb-8 flex-wrap justify-center">
+            {categories.map((category) => (
+              <Button
+                key={category}
+                variant={selectedCategory === category ? 'default' : 'outline'}
+                onClick={() => setSelectedCategory(category)}
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredShows.map((show) => (
+              <Card key={show.id} className="hover:shadow-xl transition-all duration-300">
                 <CardHeader>
-                  <Badge className="w-fit mb-2">{show.type}</Badge>
+                  <div className="flex items-start justify-between mb-2">
+                    <Badge className="w-fit">{show.type}</Badge>
+                    {show.hasContest && (
+                      <Badge className="bg-red-500">
+                        <Icon name="Trophy" size={14} className="mr-1" />
+                        Конкурс
+                      </Badge>
+                    )}
+                  </div>
                   <CardTitle>{show.title}</CardTitle>
                   <CardDescription className="flex items-center gap-2 mb-3">
                     <Icon name="Clock" size={16} />
                     {show.time}
                   </CardDescription>
-                  <p className="text-sm">{show.description}</p>
-                </CardHeader>
-                <CardContent>
-                  <Button variant="outline" className="w-full gap-2">
-                    <Icon name="Info" size={16} />
-                    Подробнее
+                  <p className="text-sm mb-4">{show.description}</p>
+                  <Button 
+                    onClick={() => setSelectedShow(selectedShow === show.title ? null : show.title)}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    <Icon name="Play" size={16} className="mr-2" />
+                    {selectedShow === show.title ? 'Скрыть выпуски' : `Смотреть выпуски (${show.episodes.length})`}
                   </Button>
-                </CardContent>
+                </CardHeader>
+                
+                {selectedShow === show.title && (
+                  <CardContent className="pt-0">
+                    <div className="space-y-4">
+                      {show.episodes.map((episode) => (
+                        <Card key={episode.id} className="bg-gray-50">
+                          <CardHeader className="p-4">
+                            <CardTitle className="text-base">{episode.title}</CardTitle>
+                            <CardDescription>{episode.date}</CardDescription>
+                            <div className="aspect-video mt-3 rounded-lg overflow-hidden">
+                              <iframe
+                                className="w-full h-full"
+                                src={episode.videoUrl}
+                                title={episode.title}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                              />
+                            </div>
+                          </CardHeader>
+                        </Card>
+                      ))}
+                    </div>
+                  </CardContent>
+                )}
               </Card>
             ))}
           </div>
+
+          {filteredShows.find(show => show.hasContest) && (
+            <Card className="mt-12 border-red-500 border-2 bg-gradient-to-br from-red-50 to-orange-50">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center">
+                    <Icon name="Trophy" size={24} className="text-white" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-2xl">Конкурс "Большой футбол"</CardTitle>
+                    <CardDescription className="text-base">Будь внимателен и выигрывай призы!</CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="bg-white p-6 rounded-lg">
+                    <h4 className="font-bold text-lg mb-3 flex items-center gap-2">
+                      <Icon name="Info" size={20} className="text-red-500" />
+                      Как участвовать
+                    </h4>
+                    <ol className="space-y-2 list-decimal list-inside text-gray-700">
+                      <li>Смотрите выпуски шоу "Большой футбол" внимательно</li>
+                      <li>Записывайте все ключи-подсказки, которые увидите во время эфира</li>
+                      <li>Собирайте подсказки и составляйте кодовое слово</li>
+                      <li>Отправляйте ответ на сайте телеканала "Новые Друзья ТВ"</li>
+                    </ol>
+                  </div>
+
+                  <div className="bg-white p-6 rounded-lg">
+                    <h4 className="font-bold text-lg mb-3 flex items-center gap-2">
+                      <Icon name="Gift" size={20} className="text-red-500" />
+                      Призы
+                    </h4>
+                    <p className="text-gray-700 mb-4">
+                      Самые внимательные зрители получат ценные призы от телеканала "Новые Друзья ТВ"!
+                    </p>
+                    <ul className="space-y-2 text-gray-700">
+                      <li className="flex items-center gap-2">
+                        <Icon name="Check" size={16} className="text-green-500" />
+                        Билеты на футбольные матчи
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <Icon name="Check" size={16} className="text-green-500" />
+                        Фирменные футболки и мерч
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <Icon name="Check" size={16} className="text-green-500" />
+                        Встреча со звездами футбола
+                      </li>
+                    </ul>
+                  </div>
+
+                  <Button size="lg" className="w-full bg-red-500 hover:bg-red-600">
+                    <Icon name="Send" size={20} className="mr-2" />
+                    Отправить ответ
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </section>
 
