@@ -139,7 +139,7 @@ const Index = () => {
             </div>
             
             <nav className="hidden md:flex gap-6">
-              {['home', 'schedule', 'about', 'shows', 'news', 'contacts'].map((section) => (
+              {['home', 'live', 'schedule', 'about', 'shows', 'news', 'contacts'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
@@ -148,6 +148,7 @@ const Index = () => {
                   }`}
                 >
                   {section === 'home' && 'Главная'}
+                  {section === 'live' && 'Прямой эфир'}
                   {section === 'schedule' && 'Телепрограмма'}
                   {section === 'about' && 'О канале'}
                   {section === 'shows' && 'Передачи'}
@@ -183,7 +184,7 @@ const Index = () => {
             Яркие эмоции, интересные передачи и незабываемые моменты каждый день
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
-            <Button size="lg" className="bg-white text-primary hover:bg-white/90 gap-2">
+            <Button size="lg" className="bg-white text-primary hover:bg-white/90 gap-2" onClick={() => scrollToSection('live')}>
               <Icon name="Play" size={20} />
               Смотреть прямой эфир
             </Button>
@@ -194,9 +195,53 @@ const Index = () => {
         </div>
       </section>
 
+      <section id="live" className="py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-red-500 animate-pulse">
+              <Icon name="Radio" size={16} className="mr-2" />
+              В ЭФИРЕ
+            </Badge>
+            <h2 className="text-4xl font-bold mb-4">Прямой эфир</h2>
+            <p className="text-xl text-gray-600">Смотрите наш канал прямо сейчас</p>
+          </div>
+
+          <div className="max-w-5xl mx-auto">
+            <div className="relative aspect-video bg-black rounded-xl overflow-hidden shadow-2xl">
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/9Auq9mYxFEE?autoplay=1&mute=0"
+                title="Прямой эфир"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+
+            <div className="mt-6 p-6 bg-white rounded-xl shadow-lg">
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Сейчас в эфире</h3>
+                  <p className="text-gray-600">Доброе утро • 06:00 - 09:00</p>
+                </div>
+                <div className="flex gap-3">
+                  <Button variant="outline" size="lg">
+                    <Icon name="Volume2" size={20} className="mr-2" />
+                    Звук
+                  </Button>
+                  <Button variant="outline" size="lg">
+                    <Icon name="Settings" size={20} className="mr-2" />
+                    Качество
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 bg-gradient-to-b from-white to-purple-50">
         <div className="container mx-auto px-4">
-          <h3 className="text-3xl font-bold text-center mb-12">Сейчас в эфире</h3>
+          <h3 className="text-3xl font-bold text-center mb-12">Популярные программы</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {programs.map((program, index) => (
               <Card 
