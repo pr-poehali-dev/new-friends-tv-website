@@ -9,6 +9,8 @@ const Index = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [selectedShow, setSelectedShow] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState('Все');
+  const [showVotingModal, setShowVotingModal] = useState(false);
+  const [selectedContestant, setSelectedContestant] = useState<number | null>(null);
 
   const programs = [
     { id: 1, title: 'Доброе утро', time: '06:00', type: 'Шоу', image: 'https://cdn.poehali.dev/projects/17136233-418e-4c97-b9f0-dc3add6e480b/files/f19a67b5-0c31-4252-bd07-c4eda9efb358.jpg' },
@@ -217,6 +219,15 @@ const Index = () => {
   const filteredShows = selectedCategory === 'Все' 
     ? shows 
     : shows.filter(show => show.category === selectedCategory);
+
+  const contestants = [
+    { id: 1, name: 'София Иванова', age: 12, country: 'Россия', song: 'Мечты о небе', votes: 1250, image: 'https://cdn.poehali.dev/projects/17136233-418e-4c97-b9f0-dc3add6e480b/files/f19a67b5-0c31-4252-bd07-c4eda9efb358.jpg' },
+    { id: 2, name: 'Артем Петров', age: 10, country: 'Россия', song: 'Звездный путь', votes: 980, image: 'https://cdn.poehali.dev/projects/17136233-418e-4c97-b9f0-dc3add6e480b/files/f19a67b5-0c31-4252-bd07-c4eda9efb358.jpg' },
+    { id: 3, name: 'Анна Смирнова', age: 14, country: 'Беларусь', song: 'Голос детства', votes: 1120, image: 'https://cdn.poehali.dev/projects/17136233-418e-4c97-b9f0-dc3add6e480b/files/f19a67b5-0c31-4252-bd07-c4eda9efb358.jpg' },
+    { id: 4, name: 'Максим Орлов', age: 11, country: 'Казахстан', song: 'Радуга надежды', votes: 890, image: 'https://cdn.poehali.dev/projects/17136233-418e-4c97-b9f0-dc3add6e480b/files/f19a67b5-0c31-4252-bd07-c4eda9efb358.jpg' },
+    { id: 5, name: 'Елена Волкова', age: 13, country: 'Украина', song: 'Крылья мечты', votes: 1340, image: 'https://cdn.poehali.dev/projects/17136233-418e-4c97-b9f0-dc3add6e480b/files/f19a67b5-0c31-4252-bd07-c4eda9efb358.jpg' },
+    { id: 6, name: 'Данил Козлов', age: 9, country: 'Россия', song: 'Солнечный день', votes: 760, image: 'https://cdn.poehali.dev/projects/17136233-418e-4c97-b9f0-dc3add6e480b/files/f19a67b5-0c31-4252-bd07-c4eda9efb358.jpg' },
+  ];
 
   const scrollToSection = (section: string) => {
     setActiveSection(section);
