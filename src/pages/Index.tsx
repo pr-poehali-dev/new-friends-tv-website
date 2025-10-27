@@ -29,6 +29,16 @@ const Index = () => {
       { time: '20:10', title: 'Супер Аватар - 1 выпуск', description: 'Премьера музыкального шоу' },
       { time: '22:00', title: 'Главное кино', description: 'Лучшие фильмы мирового проката' },
     ],
+    '12 ноября': [
+      { time: '06:00', title: 'Доброе утро', description: 'Утреннее шоу для хорошего начала дня' },
+      { time: '09:00', title: 'Новости', description: 'Главные события страны и мира' },
+      { time: '12:00', title: 'Детское время', description: 'Передачи для всей семьи' },
+      { time: '15:00', title: 'Сериал "Новые друзья"', description: 'Продолжение истории' },
+      { time: '18:00', title: 'Вечерние новости', description: 'Итоги дня' },
+      { time: '20:20', title: 'Талант Шоу - Новый сезон', description: 'Премьера нового сезона талант-шоу' },
+      { time: '20:25', title: 'Наше поколение', description: 'Международный конкурс детской авторской песни. Прямая трансляция из VTB Арены' },
+      { time: '23:00', title: 'Прямой эфир', description: 'Главное ток-шоу в прямом эфире' },
+    ],
     '8 ноября': [
       { time: '06:00', title: 'Доброе утро', description: 'Утреннее шоу для хорошего начала дня' },
       { time: '09:00', title: 'Новости', description: 'Главные события страны и мира' },
@@ -135,6 +145,32 @@ const Index = () => {
       category: 'Музыка',
       episodes: [
         { id: 1, title: 'Первый выпуск - Премьера', date: '1 ноября', videoUrl: 'https://www.youtube.com/embed/9Auq9mYxFEE' },
+      ],
+      hasContest: false
+    },
+    { 
+      id: 6,
+      title: 'Наше поколение', 
+      time: '12 ноября 20:25', 
+      description: 'Международный телевизионный конкурс детской авторской песни. Прямая трансляция из VTB Арены', 
+      type: 'Музыка',
+      category: 'Музыка',
+      episodes: [
+        { id: 1, title: 'Финал конкурса - Прямой эфир', date: '12 ноября', videoUrl: 'https://www.youtube.com/embed/9Auq9mYxFEE' },
+        { id: 2, title: 'Полуфинал - Лучшие выступления', date: '11 ноября', videoUrl: 'https://www.youtube.com/embed/9Auq9mYxFEE' },
+        { id: 3, title: 'Отборочный тур', date: '10 ноября', videoUrl: 'https://www.youtube.com/embed/9Auq9mYxFEE' },
+      ],
+      hasContest: false
+    },
+    { 
+      id: 7,
+      title: 'Талант Шоу', 
+      time: '12 ноября 20:20', 
+      description: 'Премьера нового сезона! Удивительные таланты со всей страны', 
+      type: 'Развлечения',
+      category: 'Развлечения',
+      episodes: [
+        { id: 1, title: 'Новый сезон - Премьера', date: '12 ноября', videoUrl: 'https://www.youtube.com/embed/9Auq9mYxFEE' },
       ],
       hasContest: false
     },
@@ -343,7 +379,7 @@ const Index = () => {
           <h3 className="text-3xl font-bold text-center mb-12">Телепрограмма</h3>
           
           <Tabs defaultValue="1 ноября" className="w-full">
-            <TabsList className="grid w-full grid-cols-9 mb-8">
+            <TabsList className="grid w-full grid-cols-10 mb-8">
               {Object.keys(schedule).map((day) => (
                 <TabsTrigger key={day} value={day} className="text-xs md:text-sm">
                   {day}
