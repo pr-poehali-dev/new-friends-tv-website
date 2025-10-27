@@ -17,6 +17,16 @@ const Index = () => {
   ];
 
   const schedule = {
+    '1 ноября': [
+      { time: '06:00', title: 'Доброе утро', description: 'Утреннее шоу для хорошего начала дня' },
+      { time: '09:00', title: 'Новости', description: 'Главные события страны и мира' },
+      { time: '12:00', title: 'Кулинарное шоу', description: 'Готовим вкусные блюда' },
+      { time: '15:00', title: 'Сериал "Новые друзья"', description: 'Продолжение истории' },
+      { time: '18:00', title: 'Вечерние новости', description: 'Итоги дня' },
+      { time: '19:00', title: 'Итоги недели - 1 выпуск', description: 'Премьера новой итоговой программы' },
+      { time: '20:10', title: 'Супер Аватар - 1 выпуск', description: 'Премьера музыкального шоу' },
+      { time: '22:00', title: 'Главное кино', description: 'Лучшие фильмы мирового проката' },
+    ],
     '8 ноября': [
       { time: '06:00', title: 'Доброе утро', description: 'Утреннее шоу для хорошего начала дня' },
       { time: '09:00', title: 'Новости', description: 'Главные события страны и мира' },
@@ -219,8 +229,8 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <h3 className="text-3xl font-bold text-center mb-12">Телепрограмма</h3>
           
-          <Tabs defaultValue="8 ноября" className="w-full">
-            <TabsList className="grid w-full grid-cols-8 mb-8">
+          <Tabs defaultValue="1 ноября" className="w-full">
+            <TabsList className="grid w-full grid-cols-9 mb-8">
               {Object.keys(schedule).map((day) => (
                 <TabsTrigger key={day} value={day} className="text-xs md:text-sm">
                   {day}
